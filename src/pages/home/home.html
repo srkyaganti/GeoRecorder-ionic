@@ -1,14 +1,29 @@
 <ion-header>
-  <ion-navbar>
+  <ion-navbar color="dark">
     <ion-title>
-      Ionic Blank
+      Geo Recorder
     </ion-title>
   </ion-navbar>
 </ion-header>
 
 <ion-content padding>
-  The world is your oyster.
-  <p>
-    If you get lost, the <a href="http://ionicframework.com/docs/v2">docs</a> will be your guide.
-  </p>
+  <ion-grid class="vertical-align">
+    <ion-row>
+      <ion-col col-10 offset-1>
+        <button ion-button block large icon-right  (tap)="newProject()" color="dark">
+          New
+          <ion-icon name="add-circle"></ion-icon>
+        </button>
+      </ion-col>
+    </ion-row>
+    <br><br>
+    <ion-row>
+      <ion-col col-10 offset-1>
+        <button ion-button block large icon-right (tap)="openProject()" color="dark">
+          Open
+          <ion-icon name="folder-open"></ion-icon>
+        </button>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
 </ion-content>

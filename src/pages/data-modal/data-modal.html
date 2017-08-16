@@ -1,0 +1,49 @@
+<ion-header>
+  <ion-navbar color="dark">
+    <ion-title>Recorded Data:{{title}}</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+  
+  <div  *ngIf="records.length != 0">
+    <ion-list>
+      <ion-item *ngFor="let record of records">
+        Latitude: {{record.Latitude}}
+        <br>
+        Longitude: {{ record.Longitude }}
+        <br>
+        Point description: {{ record.Comment }}
+      </ion-item>
+    </ion-list>
+
+    <div class="FabArrangement">
+      <ion-grid>
+        <ion-row>
+          <ion-col col-3 offset-1>
+            <button ion-button round large color="placeholder" (tap)="save()"><ion-icon name="download"></ion-icon></button>
+          </ion-col>
+        
+          <ion-col col-3 offset-1>
+            <button ion-button round large (tap)="share()"><ion-icon name="share"></ion-icon></button>
+          </ion-col>
+          
+          <ion-col col-3 offset-1>
+            <button ion-button round large color="secondary" (tap)="goToGooglePage()"><ion-icon name="add"></ion-icon></button>
+          </ion-col>
+          
+          <!-- <ion-col col-3 push-2> 
+            <button ion-fab color="danger" (tap)="generateMap()"><ion-icon name="analytics"></ion-icon></button>
+          </ion-col> -->
+        </ion-row>
+      </ion-grid>
+      </div>
+    </div>
+
+  
+  
+  <div *ngIf="records.length == 0">
+    <h3>No Records yet.</h3>
+  </div>
+  
+</ion-content>

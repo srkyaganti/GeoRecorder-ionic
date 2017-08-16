@@ -1,0 +1,33 @@
+<ion-header>
+  <ion-navbar color="dark">
+    <ion-title>NewProject</ion-title>
+  </ion-navbar>
+</ion-header>
+
+
+<ion-content padding>
+
+  <ion-grid>
+    <ion-row>
+      <ion-col col-10 offset-1> 
+        <ion-item class="vertical-align">
+          <ion-label floating color="placeholder">Title</ion-label>
+          <ion-input type="text" [(ngModel)]="title"></ion-input>
+        </ion-item>
+        </ion-col>
+    </ion-row>
+  </ion-grid>
+
+  <ion-grid> 
+    <ion-row>
+      <ion-col col-10 offset-1> 
+        <br>
+        <button ion-button block icon-right large color="dark" [disabled]="!title" (tap)="createProject()" >
+          Create Project
+          <ion-icon name="create"></ion-icon>
+        </button>
+        </ion-col>
+    </ion-row>
+  </ion-grid> 
+
+</ion-content>

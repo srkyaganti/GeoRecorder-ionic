@@ -1,0 +1,20 @@
+<ion-header>
+  <ion-navbar color="dark">
+    <ion-title>Open Project</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content>
+  <div  *ngIf="projects.length != 0">
+    <h3 align='center'>Recent Projects</h3>
+    <ion-list>
+      <button ion-item (tap)="presentActionSheet(project)" *ngFor="let project of projects">
+        {{ project }}
+      </button>
+    </ion-list>      
+  </div>
+  
+  <div *ngIf="projects.length == 0">
+    <h3 align='center'>No recent projects</h3>
+  </div>
+</ion-content>
