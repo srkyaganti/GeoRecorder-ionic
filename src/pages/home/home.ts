@@ -17,10 +17,12 @@ export class HomePage {
               private alertCtrl: AlertController,
               private platform: Platform){    
     this.initializeApp();
+    
   }
 
   initializeApp() {
-    this.platform.ready().then(() => {
+    this.platform.ready()
+    .then(() => {
       this.diagnostic.isGpsLocationEnabled()
       .then((modeStatus)=>{
         if(!modeStatus)

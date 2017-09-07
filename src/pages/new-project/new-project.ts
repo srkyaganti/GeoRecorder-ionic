@@ -31,14 +31,36 @@ export class NewProjectPage {
             this.title = "";
         }
         else
-          this.navCtrl.push(GooglePage,{title:this.title,records:[],flag:false}); 
+          this.next();
       })
-      //cant do anything about it so continue as well
-      .catch(()=>this.navCtrl.push(GooglePage,{title:this.title,records:[], flag:false}));
+      .catch( () => this.next() );
     })
-    //no projects exists,so continue to google page
-    .catch(()=>this.navCtrl.push(GooglePage,{title:this.title,records:[],flag:false}));
+    .catch( () => this.next() );
       
+  }
+
+  next():void{
+    
+    this.file.checkFile(this.file.externalApplicationStorageDirectory, "ListOfProjects.txt")
+    .then((result)=>{
+      this.file.readAsText(this.file.externalApplicationStorageDirectory, "ListOfProjects.txt")
+      .then((data)=>{
+
+        if(data == "")
+          data = this.title + data;
+        else
+          data = this.title + "\r\n" + data;
+        
+        this.file.writeExistingFile(this.file.externalApplicationStorageDirectory,"ListOfProjects.txt",data);
+      });
+    })
+    .catch((error) => {
+      this.file.writeFile(this.file.externalApplicationStorageDirectory,"ListOfProjects.txt",this.title);
+    });
+
+    this.file.createFile(this.file.externalApplicationStorageDirectory, this.title + ".csv", true);
+
+    this.navCtrl.setRoot(GooglePage,{title:this.title,records:[],flag:false});
   }
 
   presentToast():void {

@@ -6,7 +6,6 @@
 
 <ion-content>
   <div  *ngIf="projects.length != 0">
-    <h3 align='center'>Recent Projects</h3>
     <ion-list>
       <button ion-item (tap)="presentActionSheet(project)" *ngFor="let project of projects">
         {{ project }}

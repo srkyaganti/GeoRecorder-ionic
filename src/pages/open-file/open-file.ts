@@ -1,10 +1,9 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams } from 'ionic-angular';
+import { AlertController, NavController, NavParams } from 'ionic-angular';
 import { File } from '@ionic-native/file';
 import { Record,GooglePage } from '../google/google';
-import { AlertController } from 'ionic-angular';
 
-import { ActionSheetController } from 'ionic-angular'
+import { ActionSheetController } from 'ionic-angular';
 import { SocialSharing } from '@ionic-native/social-sharing';
 
 @Component({
@@ -39,7 +38,7 @@ export class OpenFilePage {
           let temp:string[] = results[i].split(',');
           this.records.push({ Comment:temp[2],Latitude:parseFloat(temp[0]),Longitude:parseFloat(temp[1]) });
         }
-        this.navCtrl.push(GooglePage,{records: this.records, title: projectName,flag:true});
+        this.navCtrl.setRoot(GooglePage,{records: this.records, title: projectName,flag:true});
       })
       .catch(()=>window.alert('failed to read'));
     })
@@ -118,7 +117,7 @@ export class OpenFilePage {
     
     this.file.readAsText(this.file.externalApplicationStorageDirectory, "ListOfProjects.txt")
     .then((result)=>{
-      result = result.replace(projectName + "\r\n" ,"");
+      result = result.replace(projectName+"\r\n","");
       result = result.replace(projectName,"");
       this.file.writeExistingFile(this.file.externalApplicationStorageDirectory,"ListOfProjects.txt",result);  
     });
@@ -130,6 +129,26 @@ export class OpenFilePage {
 
   shareProject(projectName:string):void{
     this.socialSharing.shareViaEmail('','',[],[],[],this.file.externalApplicationStorageDirectory + "/" + projectName + ".csv")
+  }
+
+  warning(projectName):void{
+    let alert = this.alertCtrl.create({
+      cssClass: 'alert',
+      title: 'Exit',
+      message: 'Are you sure you want to delete the project : ' + projectName,
+      buttons: [
+        {
+          text: 'OK',
+          handler: () => {
+            alert.dismiss().then(()=>this.deleteProject(projectName));
+          }
+        },
+        {
+          text: 'Cancel'
+        }
+      ]
+    });
+    alert.present();
   }
 
   presentActionSheet(projectName:string) {
@@ -156,7 +175,8 @@ export class OpenFilePage {
           text: 'Delete',
           icon: 'trash',
           handler: () => {
-            this.deleteProject(projectName);
+            this.warning(projectName);
+            // this.deleteProject(projectName);
           }
         },
         {
