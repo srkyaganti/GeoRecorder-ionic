@@ -21,8 +21,8 @@ export class OpenFilePage {
               private actionSheetCtrl: ActionSheetController,
               private socialSharing: SocialSharing,
               private file:File) {
-              
     this.loadList();
+    this.loadList()
   }
 
   openProject(projectName:string):void{
@@ -36,7 +36,25 @@ export class OpenFilePage {
         for(let i=1;i<length;i++)
         {
           let temp:string[] = results[i].split(',');
-          this.records.push({ Comment:temp[2],Latitude:parseFloat(temp[0]),Longitude:parseFloat(temp[1]) });
+          this.records.push({
+              SNo: parseInt(temp[0]),
+              
+              Comment:temp[1],
+              
+              Latitude:parseFloat(temp[2]),
+              Longitude:parseFloat(temp[3]),
+              // LocationAccuracy: parseFloat(temp[4]),
+              
+              // Altitude: parseFloat(temp[5]),
+              // AltitudeAccuracy: parseFloat(temp[6]),
+
+              Distance: parseFloat(temp[4]),
+              Bearing: parseFloat(temp[5]),
+              CumulativeDistance: parseFloat(temp[6]),
+
+              EastWestCoordinate: parseFloat(temp[7]),
+              NorthSouthCoordinate: parseFloat(temp[8])
+          });
         }
         this.navCtrl.setRoot(GooglePage,{records: this.records, title: projectName,flag:true});
       })
@@ -153,7 +171,7 @@ export class OpenFilePage {
 
   presentActionSheet(projectName:string) {
    let actionSheet = this.actionSheetCtrl.create({
-      title: 'Albums',
+      title: 'Options',
       cssClass: 'action-sheets-basic-page',
       enableBackdropDismiss:true,
       buttons: [
@@ -206,6 +224,5 @@ export class OpenFilePage {
       })
     });
   }
-
   
 }

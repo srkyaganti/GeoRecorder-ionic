@@ -58,9 +58,12 @@ export class NewProjectPage {
       this.file.writeFile(this.file.externalApplicationStorageDirectory,"ListOfProjects.txt",this.title);
     });
 
-    this.file.createFile(this.file.externalApplicationStorageDirectory, this.title + ".csv", true);
+    this.file.writeFile(this.file.externalApplicationStorageDirectory,
+                        this.title + ".csv",
+                        "S.No,Description,Latitude,Longitude,Distance(Mt),Bearing(Deg),Cumulative Distance(Mt),East-West Coordinate,North-South Coordinate")
+                        // "S.No,Description,Latitude,Longitude,Location Accuracy,Altitude,Altitude Accuracy,Distance(Mt),Bearing(Deg),Cumulative Distance(Mt),East-West Coordinate,North-South Coordinate")
+                        .then(()=>this.navCtrl.setRoot(GooglePage,{title:this.title,records:[],flag:false}));
 
-    this.navCtrl.setRoot(GooglePage,{title:this.title,records:[],flag:false});
   }
 
   presentToast():void {

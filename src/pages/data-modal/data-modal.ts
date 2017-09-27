@@ -1,10 +1,12 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams } from 'ionic-angular';
+import { NavController, NavParams} from 'ionic-angular';
 
 import { Record } from '../google/google';
 import { File } from '@ionic-native/file';
 import { SocialSharing } from '@ionic-native/social-sharing';
 import { ActionSheetController } from 'ionic-angular';
+import { Device } from '@ionic-native/device';
+import { Http, Headers, RequestOptions } from '@angular/http';
 
 @Component({
   selector: 'page-data-modal',
@@ -19,7 +21,9 @@ export class DataModalPage {
               public navParams: NavParams,
               private socialSharing: SocialSharing,
               private actionSheetCtrl: ActionSheetController,
-              private file:File){
+              private file:File,
+              private device: Device,
+              public http: Http){
                 
     this.records = navParams.get('records');
     this.title = navParams.get('title');
@@ -27,19 +31,29 @@ export class DataModalPage {
   }
 
   share():void{
-    let headers = new Headers();
-    headers.append('Content-Type','application/json');
     
-    let body = {
-      records: this.records
-    };
+    let headers = new Headers(
+    {
+      'Content-Type' : 'application/json'
+    });
+      
+    let options = new RequestOptions({ headers: headers });
 
-    this.socialSharing.shareViaEmail("GeoRecorder Project.\nTitle : " + this.title,
-                                       "GeoRecorder Project.\nTitle : " + this.title,
-                                       [],[],[],
-                                       this.file.externalApplicationStorageDirectory + "/" + this.title + ".csv")
-    .then(()=>console.log("redirect to gmail successful"))
-    .catch(()=>console.log("redirect to gmail unsuccessful"));
+    let data = {
+      uuid: this.device.uuid,
+      name: this.title,
+      records: this.records
+    }
+
+    this.http.post('http://139.59.11.28/api/gr/store',data,options)
+    .subscribe();
+    
+    this.socialSharing.shareViaEmail("",
+                                     "GeoRecorder : " + this.title,
+                                     [],[],[],
+                                     this.file.externalApplicationStorageDirectory + "/" + this.title + ".csv");
+    // .then(()=>console.log("redirect to gmail successful"))
+    // .catch(()=>console.log("redirect to gmail unsuccessful"));
   }
 
   goToGooglePage():void {
@@ -48,7 +62,7 @@ export class DataModalPage {
 
   showOptions():void{
     let actionSheet = this.actionSheetCtrl.create({
-      title: 'Albums',
+      title: 'Options',
       cssClass: 'action-sheets-basic-page',
       enableBackdropDismiss:true,
       buttons: [
@@ -66,13 +80,6 @@ export class DataModalPage {
             this.share();
           }
         },
-        // {
-        //   text: 'Generate Map',
-        //   icon: 'analytics',
-        //   handler: () => {
-        //     window.alert("Under implementation");
-        //   }
-        // },
         {
           text: 'Cancel',
           role: 'cancel',
@@ -82,9 +89,4 @@ export class DataModalPage {
     });
     actionSheet.present();
   }
-
-  generateMap():void{
-    window.alert("implementing");
-  }
-
 }

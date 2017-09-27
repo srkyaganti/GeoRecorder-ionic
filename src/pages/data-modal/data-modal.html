@@ -7,34 +7,31 @@
         <ion-icon name="apps"></ion-icon>
       </button>
     </ion-buttons>
-
     
-    <!-- <ion-icon name="apps"></ion-icon> -->
   </ion-navbar>
 </ion-header>
 
-<ion-content padding>
+<ion-content class="bg-grey">
   
   <div  *ngIf="records.length != 0">
-    
-    <ion-list>
-      <ion-item *ngFor="let record of records">
+
+    <ion-card *ngFor="let record of records">
+
+      <ion-card-content>
+        Point description: {{ record.Comment }}
+        <br>
         Latitude: {{record.Latitude}}
         <br>
         Longitude: {{ record.Longitude }}
         <br>
-        Point description: {{ record.Comment }}
-      </ion-item>
-    </ion-list>
+        Distance: {{ record.Distance }}
+        <br>
+        Bearing: {{ record.Bearing }}
+        <br>
+        Cumulative Distance: {{ record.CumulativeDistance }}
+      </ion-card-content>
     
-    <!-- <ion-fab top right>
-      <button ion-fab color="dark"><ion-icon name="arrow-dropdown"></ion-icon></button>
-      <ion-fab-list side="bottom">
-        <button ion-fab color="primary" (tap)="share()"><ion-icon name="share"></ion-icon></button>
-        <button ion-fab color="secondary" (tap)="goToGooglePage()"><ion-icon name="add"></ion-icon></button>
-        <button ion-fab color="danger" (tap)="generateMap()"><ion-icon name="analytics"></ion-icon></button>
-      </ion-fab-list>
-    </ion-fab> -->
+    </ion-card>
 
   </div>
 

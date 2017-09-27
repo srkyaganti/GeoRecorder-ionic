@@ -8,6 +8,8 @@ import { AlertController } from 'ionic-angular';
 import { ToastController } from 'ionic-angular';
 import { Diagnostic } from '@ionic-native/diagnostic';
 import { SocialSharing } from '@ionic-native/social-sharing';
+import { Device } from '@ionic-native/device';
+import { HttpModule } from '@angular/http';
 
 import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
@@ -15,6 +17,7 @@ import { NewProjectPage } from '../pages/new-project/new-project';
 import { OpenFilePage } from '../pages/open-file/open-file';
 import { GooglePage } from '../pages/google/google';
 import { DataModalPage } from '../pages/data-modal/data-modal';
+import { ShowRecordPage } from '../pages/show-record/show-record';
 
 @NgModule({
   declarations: [
@@ -24,10 +27,12 @@ import { DataModalPage } from '../pages/data-modal/data-modal';
     OpenFilePage,
     GooglePage,
     DataModalPage,
+    ShowRecordPage,
   ],
   imports: [
     BrowserModule,
-    IonicModule.forRoot(MyApp)
+    IonicModule.forRoot(MyApp),
+    HttpModule,
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -37,6 +42,7 @@ import { DataModalPage } from '../pages/data-modal/data-modal';
     OpenFilePage,
     GooglePage,
     DataModalPage,
+    ShowRecordPage,
   ],
   providers: [
     File,
@@ -45,6 +51,7 @@ import { DataModalPage } from '../pages/data-modal/data-modal';
     ToastController,
     Diagnostic,
     SocialSharing,
+    Device,
     {provide: ErrorHandler, useClass: IonicErrorHandler}
   ]
 })

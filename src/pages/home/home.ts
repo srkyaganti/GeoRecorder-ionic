@@ -17,7 +17,6 @@ export class HomePage {
               private alertCtrl: AlertController,
               private platform: Platform){    
     this.initializeApp();
-    
   }
 
   initializeApp() {
